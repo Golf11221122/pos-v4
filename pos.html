@@ -10,7 +10,7 @@
         POS | CHAIXI BAMEEKIAO POS
     </title>
 
-    <link rel="stylesheet" href="./css/pos.css?v=3.0.0">
+    <link rel="stylesheet" href="./css/pos.css?v=4.1.0">
 
     <style>
         @media print {
@@ -90,36 +90,53 @@
         <section class="catalog">
 
 
-            <!-- SEARCH -->
+            <!-- CATALOG NAV / SEARCH -->
 
-            <div class="toolbar">
+            <div class="catalog-nav">
+                <div class="catalog-nav-actions">
+                    <button id="searchToggleBtn" class="catalog-icon-btn" type="button" aria-label="ค้นหาเมนู" title="ค้นหาเมนู">
+                        <span class="catalog-search-icon" aria-hidden="true"></span>
+                    </button>
 
-                <input id="searchInput" type="search" placeholder="ค้นหาชื่อสินค้า SKU หรือบาร์โค้ด" autocomplete="off">
+                    <button id="categoryMenuBtn" class="catalog-icon-btn" type="button" aria-label="เลือกหมวดเมนู" title="เลือกหมวดเมนู">
+                        <span class="catalog-list-icon" aria-hidden="true"><i></i><i></i><i></i></span>
+                    </button>
+                </div>
 
+                <div id="categoryTabs" class="tabs" aria-label="หมวดเมนู"></div>
+            </div>
 
-                <button id="refreshBtn" class="outline-btn refresh-btn" type="button">
+            <div id="searchPanel" class="search-panel hidden">
+                <button id="searchCloseBtn" class="search-back-btn" type="button" aria-label="ปิดการค้นหา">←</button>
+                <div class="search-field-wrap">
+                    <span class="catalog-search-icon" aria-hidden="true"></span>
+                    <input id="searchInput" type="search" placeholder="ค้นหาเมนูอาหาร" autocomplete="off">
+                    <button id="searchClearBtn" class="search-clear-btn hidden" type="button" aria-label="ล้างคำค้นหา">×</button>
+                </div>
+            </div>
 
-                    <span class="refresh-icon">
-                        ↻
-                    </span>
-
-                    <span class="refresh-text">
-                        รีเฟรช
-                    </span>
-
+            <div class="catalog-secondary-actions">
+                <button id="refreshBtn" class="outline-btn refresh-btn" type="button" title="รีเฟรชข้อมูล">
+                    <span class="refresh-icon">↻</span>
+                    <span class="refresh-text">รีเฟรช</span>
                 </button>
 
                 <button id="modifierManagerBtn" class="outline-btn modifier-manager-open-btn" type="button">
                     ⚙ ตัวเลือกเมนู
                 </button>
-
             </div>
 
-
-
-            <!-- CATEGORY -->
-
-            <div id="categoryTabs" class="tabs"></div>
+            <div id="categorySheet" class="category-sheet hidden" aria-hidden="true">
+                <button id="categorySheetBackdrop" class="category-sheet-backdrop" type="button" aria-label="ปิดหมวดเมนู"></button>
+                <section class="category-sheet-panel" role="dialog" aria-modal="true" aria-labelledby="categorySheetTitle">
+                    <div class="category-sheet-handle" aria-hidden="true"></div>
+                    <div class="category-sheet-header">
+                        <h2 id="categorySheetTitle">หมวดเมนู</h2>
+                        <button id="categorySheetCloseBtn" class="category-sheet-close" type="button" aria-label="ปิด">×</button>
+                    </div>
+                    <div id="categorySheetList" class="category-sheet-list"></div>
+                </section>
+            </div>
 
 
 
@@ -1000,7 +1017,7 @@
     ========================================= -->
 
     <script type="module" src="./js/ui-feedback.js?v=3.0.0"></script>
-    <script type="module" src="./js/pos.js?v=3.0.0"></script>
+    <script type="module" src="./js/pos.js?v=4.1.0"></script>
 
     <script type="module" src="./js/pro-ui.js?v=3.13.0"></script>
 </body>
