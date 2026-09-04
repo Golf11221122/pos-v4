@@ -1,0 +1,381 @@
+/* =========================================================
+   CHAIXI BAMEEKIAO — Customer QR menu navigation
+   Match latest POS menu navigation on mobile.
+   Applies to table QR + takeaway QR.
+   ========================================================= */
+
+:root {
+  --chaixi-nav-active: #b42318;
+  --chaixi-nav-text: #667085;
+  --chaixi-nav-border: #e5e7eb;
+}
+
+.customer-catalog-nav {
+  position: sticky;
+  top: 72px;
+  z-index: 35;
+  display: grid;
+  grid-template-columns: 92px minmax(0,1fr);
+  align-items: stretch;
+  min-width: 0;
+  min-height: 58px;
+  margin: 0 -14px 12px;
+  padding: 0 14px;
+  background: rgba(255,255,255,.98);
+  border-bottom: 1px solid var(--chaixi-nav-border);
+  backdrop-filter: blur(12px);
+}
+
+.customer-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  width: 92px;
+  min-width: 92px;
+}
+
+.customer-nav-icon-btn {
+  flex: 0 0 44px;
+  width: 44px;
+  min-width: 44px;
+  height: 58px;
+  min-height: 58px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #182230;
+  box-shadow: none;
+}
+
+.customer-nav-icon-btn:focus,
+.customer-nav-icon-btn:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
+.customer-search-icon {
+  position: relative;
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  border: 3px solid currentColor;
+  border-radius: 50%;
+  color: #182230;
+}
+
+.customer-search-icon::after {
+  content: "";
+  position: absolute;
+  width: 12px;
+  height: 3px;
+  right: -9px;
+  bottom: -5px;
+  border-radius: 999px;
+  background: currentColor;
+  transform: rotate(45deg);
+  transform-origin: left center;
+}
+
+.customer-list-icon {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 28px;
+  height: 28px;
+}
+
+.customer-list-icon i {
+  position: relative;
+  display: block;
+  height: 3px;
+  margin-left: 9px;
+  border-radius: 999px;
+  background: #182230;
+}
+
+.customer-list-icon i::before {
+  content: "";
+  position: absolute;
+  left: -9px;
+  top: 50%;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #182230;
+  transform: translateY(-50%);
+}
+
+.customer-catalog-nav .category-tabs {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: stretch !important;
+  gap: 26px !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  height: 58px !important;
+  min-height: 58px !important;
+  margin: 0 !important;
+  padding: 0 8px !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  scrollbar-width: none !important;
+  -webkit-overflow-scrolling: touch !important;
+}
+
+.customer-catalog-nav .category-tabs::-webkit-scrollbar { display: none !important; }
+
+.customer-catalog-nav .category-tab {
+  position: relative !important;
+  display: inline-flex !important;
+  flex: 0 0 auto !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: auto !important;
+  min-width: max-content !important;
+  height: 58px !important;
+  min-height: 58px !important;
+  margin: 0 !important;
+  padding: 0 1px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  outline: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: var(--chaixi-nav-text) !important;
+  font-size: 16px !important;
+  font-weight: 800 !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+}
+
+.customer-catalog-nav .category-tab.active {
+  color: var(--chaixi-nav-active) !important;
+  background: transparent !important;
+  border: 0 !important;
+}
+
+.customer-catalog-nav .category-tab.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  border-radius: 999px 999px 0 0;
+  background: var(--chaixi-nav-active);
+}
+
+.customer-search-panel.hidden { display: none !important; }
+
+.customer-search-panel:not(.hidden) {
+  position: sticky;
+  top: 72px;
+  z-index: 37;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 -14px 12px;
+  padding: 8px 14px 10px;
+  background: #fff;
+  border-bottom: 1px solid var(--chaixi-nav-border);
+}
+
+.customer-search-back {
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  background: transparent;
+  color: #182230;
+  font-size: 30px;
+  line-height: 1;
+}
+
+.customer-search-field {
+  position: relative;
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  min-width: 0;
+  min-height: 44px;
+  padding: 0 12px 0 15px;
+  border: 1px solid #d0d5dd;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: none !important;
+}
+
+.customer-search-field:focus-within {
+  border-color: #d0d5dd;
+  box-shadow: none !important;
+}
+
+.customer-search-field .customer-search-icon {
+  width: 21px;
+  height: 21px;
+  border-width: 2.5px;
+  color: #98a2b3;
+  flex: 0 0 auto;
+}
+
+.customer-search-field .customer-search-icon::after {
+  width: 10px;
+  height: 2.5px;
+  right: -8px;
+  bottom: -4px;
+}
+
+.customer-search-field input,
+.customer-search-field input:focus,
+.customer-search-field input:focus-visible {
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 0;
+  min-height: 42px;
+  padding: 0 12px 0 14px !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  outline: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  color: #182230;
+}
+
+.customer-search-field input::-webkit-search-decoration,
+.customer-search-field input::-webkit-search-cancel-button,
+.customer-search-field input::-webkit-search-results-button,
+.customer-search-field input::-webkit-search-results-decoration {
+  -webkit-appearance: none;
+  display: none;
+}
+
+.customer-search-clear {
+  flex: 0 0 32px;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 50%;
+  background: #f2f4f7;
+  color: #667085;
+  font-size: 22px;
+}
+
+.customer-category-sheet.hidden { display: none !important; }
+
+.customer-category-sheet {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.customer-category-backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: rgba(0,0,0,.36);
+}
+
+.customer-category-sheet-card {
+  position: relative;
+  z-index: 1;
+  width: min(680px,100%);
+  max-height: min(72vh,640px);
+  overflow: hidden;
+  padding: 16px 20px max(18px,env(safe-area-inset-bottom));
+  border-radius: 20px 20px 0 0;
+  background: #fff;
+  box-shadow: 0 -16px 45px rgba(0,0,0,.16);
+}
+
+.customer-category-sheet-title {
+  padding: 4px 2px 14px;
+  border-bottom: 1px solid #eaecf0;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.customer-category-sheet-list {
+  max-height: calc(72vh - 70px);
+  overflow: auto;
+}
+
+.customer-category-sheet-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 58px;
+  padding: 0 12px;
+  border: 0;
+  border-bottom: 1px solid #eaecf0;
+  background: #fff;
+  color: #344054;
+  text-align: left;
+  font-size: 17px;
+}
+
+.customer-category-sheet-item.active {
+  color: var(--chaixi-nav-active);
+  font-weight: 800;
+}
+
+.customer-category-check {
+  font-size: 24px;
+  font-weight: 900;
+}
+
+
+/* Product cards: align customer QR pages with latest POS visual language */
+html[data-ui-page="self-order"] .product-card,
+html[data-ui-page="customer-order"] .product-card {
+  border: 1px solid #e2e5e9 !important;
+  border-radius: 16px !important;
+  background: #fff !important;
+  box-shadow: none !important;
+}
+
+html[data-ui-page="self-order"] .product-image,
+html[data-ui-page="customer-order"] .product-image {
+  background: #fff6d7 !important;
+}
+
+html[data-ui-page="self-order"] .product-info h3,
+html[data-ui-page="customer-order"] .product-info h3 {
+  color: #172033 !important;
+  font-weight: 800 !important;
+}
+
+html[data-ui-page="self-order"] .product-price-row strong,
+html[data-ui-page="customer-order"] .product-price-row strong {
+  color: #172033 !important;
+  font-weight: 900 !important;
+}
+
+html[data-ui-page="self-order"] .stock-low,
+html[data-ui-page="customer-order"] .stock-low {
+  color: #188038 !important;
+  font-weight: 800 !important;
+}
+
+html[data-ui-page="self-order"] .add-icon,
+html[data-ui-page="customer-order"] .add-icon {
+  display: grid !important;
+  place-items: center !important;
+  width: 34px !important;
+  height: 34px !important;
+  border-radius: 50% !important;
+  background: #172033 !important;
+  color: #fff !important;
+  font-weight: 900 !important;
+}
