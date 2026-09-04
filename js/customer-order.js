@@ -83,6 +83,27 @@ const el = {
     categoryTabs:
         $('categoryTabs'),
 
+    searchToggleBtn:
+        $('searchToggleBtn'),
+
+    searchPanel:
+        $('searchPanel'),
+
+    searchCloseBtn:
+        $('searchCloseBtn'),
+
+    searchClearBtn:
+        $('searchClearBtn'),
+
+    categoryMenuBtn:
+        $('categoryMenuBtn'),
+
+    categorySheet:
+        $('categorySheet'),
+
+    categorySheetList:
+        $('categorySheetList'),
+
     menuLoading:
         $('menuLoading'),
 
@@ -676,6 +697,76 @@ async function loadMenu() {
 }
 
 
+
+/* ========================================
+   CUSTOMER MENU NAV — POS MATCH
+======================================== */
+function renderCustomerCategorySheet() {
+    if (!el.categorySheetList) return
+
+    const allCategories = [
+        { id: '', name: 'ทั้งหมด' },
+        ...(state.categories || [])
+    ]
+
+    el.categorySheetList.innerHTML =
+        allCategories.map(category => {
+            const id = category.id || ''
+            const active = (state.selectedCategory || '') === id
+
+            return `
+                <button
+                    type="button"
+                    class="customer-category-sheet-item ${active ? 'active' : ''}"
+                    data-sheet-cat="${esc(id)}"
+                >
+                    <span>${esc(category.name || 'ทั้งหมด')}</span>
+                    ${active ? '<span class="customer-category-check">✓</span>' : ''}
+                </button>
+            `
+        }).join('')
+}
+
+function openCustomerCategorySheet() {
+    renderCustomerCategorySheet()
+    el.categorySheet?.classList.remove('hidden')
+    el.categorySheet?.setAttribute('aria-hidden', 'false')
+}
+
+function closeCustomerCategorySheet() {
+    el.categorySheet?.classList.add('hidden')
+    el.categorySheet?.setAttribute('aria-hidden', 'true')
+}
+
+function openCustomerSearch() {
+    el.searchPanel?.classList.remove('hidden')
+
+    requestAnimationFrame(() => {
+        el.searchInput?.focus()
+    })
+}
+
+function closeCustomerSearch() {
+    if (!el.searchInput) return
+
+    el.searchInput.value = ''
+    el.searchClearBtn?.classList.add('hidden')
+    el.searchPanel?.classList.add('hidden')
+    renderProducts()
+}
+
+function syncCustomerCategoryTabIntoView() {
+    const active =
+        el.categoryTabs
+            ?.querySelector('.category-tab.active')
+
+    active?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+        inline: 'center'
+    })
+}
+
 function renderCategories() {
 
     el.categoryTabs.innerHTML =
@@ -716,6 +807,9 @@ function renderCategories() {
                     `
             )
             .join('')
+
+    renderCustomerCategorySheet()
+    requestAnimationFrame(syncCustomerCategoryTabIntoView)
 }
 
 
@@ -2015,7 +2109,84 @@ el.startOrderBtn
 el.searchInput
     ?.addEventListener(
         'input',
-        renderProducts
+        () => {
+            el.searchClearBtn
+                ?.classList
+                .toggle(
+                    'hidden',
+                    !el.searchInput.value
+                )
+
+            renderProducts()
+        }
+    )
+
+el.searchToggleBtn
+    ?.addEventListener(
+        'click',
+        openCustomerSearch
+    )
+
+el.searchCloseBtn
+    ?.addEventListener(
+        'click',
+        closeCustomerSearch
+    )
+
+el.searchClearBtn
+    ?.addEventListener(
+        'click',
+        () => {
+            el.searchInput.value = ''
+
+            el.searchClearBtn
+                .classList
+                .add(
+                    'hidden'
+                )
+
+            renderProducts()
+            el.searchInput.focus()
+        }
+    )
+
+el.categoryMenuBtn
+    ?.addEventListener(
+        'click',
+        openCustomerCategorySheet
+    )
+
+el.categorySheet
+    ?.addEventListener(
+        'click',
+        event => {
+            if (
+                event.target.closest(
+                    '[data-close-category-sheet]'
+                )
+            ) {
+                closeCustomerCategorySheet()
+                return
+            }
+
+            const button =
+                event.target.closest(
+                    '[data-sheet-cat]'
+                )
+
+            if (!button) {
+                return
+            }
+
+            state.selectedCategory =
+                button.dataset.sheetCat
+                ||
+                ''
+
+            renderCategories()
+            renderProducts()
+            closeCustomerCategorySheet()
+        }
     )
 
 
