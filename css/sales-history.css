@@ -2121,3 +2121,149 @@ body.sales-detail-open{
         font-size:12px!important;
     }
 }
+
+
+/* =========================================================
+   CHAIXI POS SALES HISTORY — SIMPLE REPORT TABLE V1
+   Mobile: keep a real table instead of stacked sale cards.
+   ========================================================= */
+@media (max-width: 720px) {
+    .sales-card {
+        padding: 14px 0 0 !important;
+        overflow: hidden !important;
+        border: 1px solid var(--sh-border) !important;
+        border-radius: 14px !important;
+        background: #fff !important;
+        box-shadow: 0 2px 8px rgba(16,24,40,.05) !important;
+    }
+
+    .sales-card .sales-header {
+        margin: 0 !important;
+        padding: 0 14px 12px !important;
+    }
+
+    .sales-card .table-wrap {
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: auto !important;
+        overflow-y: visible !important;
+        background: #fff !important;
+        -webkit-overflow-scrolling: touch !important;
+        scrollbar-width: thin !important;
+    }
+
+    .sales-card table {
+        display: table !important;
+        width: 100% !important;
+        min-width: 780px !important;
+        border-collapse: collapse !important;
+        table-layout: auto !important;
+        background: #fff !important;
+    }
+
+    .sales-card thead {
+        display: table-header-group !important;
+    }
+
+    .sales-card tbody {
+        display: table-row-group !important;
+    }
+
+    .sales-card thead tr,
+    .sales-card tbody tr {
+        display: table-row !important;
+        overflow: visible !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        background: #fff !important;
+        box-shadow: none !important;
+    }
+
+    .sales-card thead th {
+        position: sticky !important;
+        top: 0 !important;
+        z-index: 3 !important;
+        display: table-cell !important;
+        height: 42px !important;
+        padding: 10px 10px !important;
+        border-bottom: 1px solid #dfe3e8 !important;
+        background: #f8fafc !important;
+        color: #667085 !important;
+        font-size: 11px !important;
+        font-weight: 900 !important;
+        line-height: 1.25 !important;
+        white-space: nowrap !important;
+        vertical-align: middle !important;
+    }
+
+    .sales-card tbody td,
+    .sales-card tbody td:last-child {
+        display: table-cell !important;
+        min-height: 0 !important;
+        padding: 10px 10px !important;
+        border-bottom: 1px solid #edf0f3 !important;
+        background: #fff !important;
+        color: #344054 !important;
+        font-size: 12px !important;
+        line-height: 1.3 !important;
+        white-space: nowrap !important;
+        vertical-align: middle !important;
+    }
+
+    .sales-card tbody td::before,
+    .sales-card tbody td:last-child::before {
+        content: none !important;
+        display: none !important;
+    }
+
+    .sales-card tbody tr:active td {
+        background: #fafbfc !important;
+    }
+
+    .sales-card .invoice-number {
+        max-width: 190px !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        font-weight: 800 !important;
+    }
+
+    .sales-card .sale-total {
+        text-align: right !important;
+        font-weight: 900 !important;
+    }
+
+    .sales-card .badge {
+        min-height: 24px !important;
+        padding: 3px 8px !important;
+        font-size: 10px !important;
+    }
+
+    .sales-card .view-btn {
+        min-height: 32px !important;
+        padding: 6px 9px !important;
+        border-radius: 8px !important;
+        font-size: 11px !important;
+        white-space: nowrap !important;
+    }
+
+    .sales-card th:nth-child(1),
+    .sales-card td:nth-child(1) { min-width: 132px !important; }
+
+    .sales-card th:nth-child(2),
+    .sales-card td:nth-child(2) { min-width: 190px !important; }
+
+    .sales-card th:nth-child(3),
+    .sales-card td:nth-child(3) { min-width: 120px !important; }
+
+    .sales-card th:nth-child(4),
+    .sales-card td:nth-child(4) { min-width: 88px !important; }
+
+    .sales-card th:nth-child(5),
+    .sales-card td:nth-child(5) { min-width: 92px !important; }
+
+    .sales-card th:nth-child(6),
+    .sales-card td:nth-child(6) { min-width: 88px !important; }
+
+    .sales-card th:nth-child(7),
+    .sales-card td:nth-child(7) { min-width: 104px !important; }
+}
