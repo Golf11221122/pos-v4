@@ -1,0 +1,184 @@
+/* =========================================================
+   CHAIXI BAMEEKIAO POS — Menu Navigation FINAL OVERRIDE
+   2026-09-04
+   Loaded AFTER pro-ui.css on purpose.
+   ========================================================= */
+
+@media (max-width: 1024px) {
+  html[data-ui-page="pos"] .catalog-nav {
+    position: sticky !important;
+    top: 58px !important;
+    z-index: 30 !important;
+    display: grid !important;
+    grid-template-columns: 92px minmax(0, 1fr) !important;
+    align-items: stretch !important;
+    gap: 6px !important;
+    width: auto !important;
+    min-width: 0 !important;
+    min-height: 58px !important;
+    margin: 0 -10px 10px !important;
+    padding: 0 10px !important;
+    overflow: hidden !important;
+    background: #fff !important;
+    border: 0 !important;
+    border-bottom: 1px solid #e5e7eb !important;
+    box-shadow: none !important;
+  }
+
+  html[data-ui-page="pos"] .catalog-nav-actions {
+    grid-column: 1 !important;
+    display: flex !important;
+    flex-flow: row nowrap !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 2px !important;
+    width: 92px !important;
+    min-width: 92px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  html[data-ui-page="pos"] .catalog-icon-btn,
+  html[data-ui-page="pos"] .catalog-nav-actions button[type="button"] {
+    flex: 0 0 44px !important;
+    width: 44px !important;
+    min-width: 44px !important;
+    max-width: 44px !important;
+    height: 58px !important;
+    min-height: 58px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    color: #182230 !important;
+  }
+
+  html[data-ui-page="pos"] .catalog-icon-btn.active {
+    background: transparent !important;
+    color: #b42318 !important;
+  }
+
+  html[data-ui-page="pos"] #categoryTabs.tabs {
+    grid-column: 2 !important;
+    position: static !important;
+    top: auto !important;
+    z-index: auto !important;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: stretch !important;
+    justify-content: flex-start !important;
+    gap: 26px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    height: 58px !important;
+    min-height: 58px !important;
+    margin: 0 !important;
+    padding: 0 8px !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    overscroll-behavior-x: contain !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+
+  html[data-ui-page="pos"] #categoryTabs.tabs::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  html[data-ui-page="pos"] #categoryTabs.tabs > button.tab,
+  html[data-ui-page="pos"] #categoryTabs.tabs > .tab {
+    position: relative !important;
+    display: inline-flex !important;
+    flex: 0 0 auto !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: auto !important;
+    min-width: max-content !important;
+    max-width: none !important;
+    height: 58px !important;
+    min-height: 58px !important;
+    margin: 0 !important;
+    padding: 0 1px !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    outline: 0 !important;
+    background: transparent !important;
+    background-image: none !important;
+    box-shadow: none !important;
+    color: #667085 !important;
+    font: inherit !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+    transform: none !important;
+  }
+
+  html[data-ui-page="pos"] #categoryTabs.tabs > button.tab.active,
+  html[data-ui-page="pos"] #categoryTabs.tabs > .tab.active {
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    background-image: none !important;
+    color: #b42318 !important;
+    box-shadow: none !important;
+  }
+
+  html[data-ui-page="pos"] #categoryTabs.tabs > button.tab.active::after,
+  html[data-ui-page="pos"] #categoryTabs.tabs > .tab.active::after {
+    content: "" !important;
+    position: absolute !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    display: block !important;
+    width: auto !important;
+    height: 3px !important;
+    border-radius: 999px 999px 0 0 !important;
+    background: #b42318 !important;
+  }
+
+  /* Search stays hidden until the magnifier button is tapped. */
+  html[data-ui-page="pos"] #searchPanel.search-panel.hidden {
+    display: none !important;
+  }
+
+  html[data-ui-page="pos"] #searchPanel.search-panel:not(.hidden) {
+    position: sticky !important;
+    top: 58px !important;
+    z-index: 32 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    margin: 0 -10px 10px !important;
+    padding: 8px 10px 10px !important;
+    background: #fff !important;
+    border-bottom: 1px solid #e5e7eb !important;
+  }
+
+  html[data-ui-page="pos"] #searchPanel .search-field-wrap {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    min-height: 44px !important;
+    border: 1px solid #d0d5dd !important;
+    border-radius: 999px !important;
+    background: #fff !important;
+    box-shadow: none !important;
+  }
+
+  html[data-ui-page="pos"] #searchPanel #searchInput {
+    min-height: 42px !important;
+    border: 0 !important;
+    border-radius: 999px !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+}
