@@ -4136,3 +4136,156 @@ body { background: linear-gradient(180deg,#fbfcff 0%,#f4f6fb 100%) !important; c
     .toolbar > :first-child { grid-column: 1 / -1; }
     .cart { position: fixed; top: auto; right: 10px; left: 10px; bottom: 10px; height: min(78vh, 720px); border-radius: 24px; }
 }
+
+/* =========================================================
+   POS CATALOG COMPACT SEARCH + MENU CATEGORY NAV (2026-09-04)
+   - Compact rounded search
+   - Refresh stays on the same row
+   - Categories use scrollable text navigation with active underline
+   ========================================================= */
+.toolbar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 46px;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    border-radius: 18px;
+}
+
+.toolbar input {
+    min-width: 0;
+    min-height: 42px;
+    height: 42px;
+    padding: 0 16px;
+    border-radius: 999px;
+    font-size: 15px;
+}
+
+.refresh-btn {
+    width: 46px;
+    min-width: 46px;
+    height: 42px;
+    min-height: 42px;
+    padding: 0;
+    border-radius: 999px !important;
+}
+
+.refresh-btn .refresh-text {
+    display: none;
+}
+
+.refresh-btn .refresh-icon {
+    font-size: 21px;
+    line-height: 1;
+}
+
+.modifier-manager-open-btn {
+    grid-column: 1 / -1;
+    justify-self: start;
+    min-height: 36px;
+    padding: 6px 11px;
+    font-size: 13px;
+}
+
+.tabs {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    gap: 28px;
+    margin: 0 0 16px;
+    padding: 0 4px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    border-bottom: 1px solid #eceff3;
+    background: transparent;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+}
+
+.tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.tabs > *,
+.tab {
+    flex: 0 0 auto;
+    position: relative;
+    min-height: 46px;
+    padding: 0 1px 12px;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    color: var(--muted) !important;
+    font-size: 15px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.tab::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    bottom: -1px;
+    left: 0;
+    height: 3px;
+    border-radius: 3px 3px 0 0;
+    background: transparent;
+}
+
+.tab.active {
+    color: var(--primary) !important;
+}
+
+.tab.active::after {
+    background: var(--primary);
+}
+
+@media (max-width: 960px) {
+    .toolbar {
+        top: 78px;
+        grid-template-columns: minmax(0, 1fr) 44px;
+        gap: 7px;
+        padding: 8px;
+        margin-bottom: 10px;
+    }
+
+    .toolbar > :first-child {
+        grid-column: auto;
+    }
+
+    .toolbar input {
+        min-height: 40px;
+        height: 40px;
+        padding: 0 14px;
+        font-size: 15px;
+    }
+
+    .refresh-btn {
+        width: 44px;
+        min-width: 44px;
+        height: 40px;
+        min-height: 40px;
+    }
+
+    .modifier-manager-open-btn {
+        grid-column: 1 / -1;
+    }
+
+    .tabs {
+        position: sticky;
+        top: 145px;
+        z-index: 14;
+        gap: 26px;
+        margin: 0 -12px 12px;
+        padding: 0 16px;
+        background: rgba(244, 246, 251, .96);
+        backdrop-filter: blur(10px);
+    }
+
+    .tab {
+        min-height: 44px;
+        padding: 10px 0 11px;
+        font-size: 15px;
+    }
+}
