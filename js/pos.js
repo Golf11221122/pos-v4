@@ -91,11 +91,38 @@ const el = {
     searchInput:
         $('searchInput'),
 
+    searchToggleBtn:
+        $('searchToggleBtn'),
+
+    searchPanel:
+        $('searchPanel'),
+
+    searchCloseBtn:
+        $('searchCloseBtn'),
+
+    searchClearBtn:
+        $('searchClearBtn'),
+
     refreshBtn:
         $('refreshBtn'),
 
     categoryTabs:
         $('categoryTabs'),
+
+    categoryMenuBtn:
+        $('categoryMenuBtn'),
+
+    categorySheet:
+        $('categorySheet'),
+
+    categorySheetBackdrop:
+        $('categorySheetBackdrop'),
+
+    categorySheetCloseBtn:
+        $('categorySheetCloseBtn'),
+
+    categorySheetList:
+        $('categorySheetList'),
 
     loading:
         $('loading'),
@@ -3476,43 +3503,76 @@ function renderUser() {
 
 function renderCategories() {
 
-    el.categoryTabs.innerHTML =
-        `
-        <button
-            class="tab ${!state.selectedCategory
-            ? 'active'
-            : ''
-        }"
-            data-cat=""
-            type="button"
-        >
-            ทั้งหมด
-        </button>
-        `
-        +
-        state.categories
-            .map(
-                category =>
-                    `
-                    <button
-                        class="tab ${state.selectedCategory
-                        ===
-                        category.id
-                        ? 'active'
-                        : ''
-                    }"
-                        data-cat="${esc(
-                        category.id
-                    )}"
-                        type="button"
-                    >
-                        ${esc(
-                        category.name
-                    )}
-                    </button>
-                    `
-            )
+    const items = [
+        { id: '', name: 'สำหรับคุณ' },
+        ...state.categories.map(category => ({
+            id: category.id,
+            name: category.name
+        }))
+    ]
+
+    el.categoryTabs.innerHTML = items
+        .map(item => `
+            <button
+                class="tab ${state.selectedCategory === item.id ? 'active' : ''}"
+                data-cat="${esc(item.id)}"
+                type="button"
+            >${esc(item.name)}</button>
+        `)
+        .join('')
+
+    if (el.categorySheetList) {
+        el.categorySheetList.innerHTML = items
+            .map(item => `
+                <button
+                    class="category-sheet-item ${state.selectedCategory === item.id ? 'active' : ''}"
+                    data-sheet-cat="${esc(item.id)}"
+                    type="button"
+                >
+                    <span>${esc(item.name)}</span>
+                    <span class="category-check" aria-hidden="true">✓</span>
+                </button>
+            `)
             .join('')
+    }
+
+    requestAnimationFrame(() => {
+        el.categoryTabs
+            ?.querySelector('.tab.active')
+            ?.scrollIntoView({
+                behavior: 'smooth',
+                block: 'nearest',
+                inline: 'center'
+            })
+    })
+}
+
+function openSearchPanel() {
+    el.searchPanel?.classList.remove('hidden')
+    el.searchToggleBtn?.classList.add('active')
+    requestAnimationFrame(() => el.searchInput?.focus())
+}
+
+function closeSearchPanel({ clear = false } = {}) {
+    if (clear && el.searchInput) {
+        el.searchInput.value = ''
+        renderProducts()
+    }
+    el.searchPanel?.classList.add('hidden')
+    el.searchToggleBtn?.classList.remove('active')
+    el.searchInput?.blur()
+}
+
+function openCategorySheet() {
+    el.categorySheet?.classList.remove('hidden')
+    el.categorySheet?.setAttribute('aria-hidden', 'false')
+    document.body.classList.add('category-sheet-open')
+}
+
+function closeCategorySheet() {
+    el.categorySheet?.classList.add('hidden')
+    el.categorySheet?.setAttribute('aria-hidden', 'true')
+    document.body.classList.remove('category-sheet-open')
 }
 
 
@@ -8877,8 +8937,28 @@ el.logoutBtn
 el.searchInput
     ?.addEventListener(
         'input',
-        renderProducts
+        () => {
+            el.searchClearBtn?.classList.toggle(
+                'hidden',
+                !el.searchInput.value
+            )
+            renderProducts()
+        }
     )
+
+el.searchToggleBtn
+    ?.addEventListener('click', openSearchPanel)
+
+el.searchCloseBtn
+    ?.addEventListener('click', () => closeSearchPanel())
+
+el.searchClearBtn
+    ?.addEventListener('click', () => {
+        el.searchInput.value = ''
+        el.searchClearBtn.classList.add('hidden')
+        renderProducts()
+        el.searchInput.focus()
+    })
 
 
 /* ========================================
@@ -8991,10 +9071,29 @@ el.categoryTabs
 
             renderCategories()
 
-
             renderProducts()
         }
     )
+
+el.categoryMenuBtn
+    ?.addEventListener('click', openCategorySheet)
+
+el.categorySheetBackdrop
+    ?.addEventListener('click', closeCategorySheet)
+
+el.categorySheetCloseBtn
+    ?.addEventListener('click', closeCategorySheet)
+
+el.categorySheetList
+    ?.addEventListener('click', event => {
+        const button = event.target.closest('[data-sheet-cat]')
+        if (!button) return
+
+        state.selectedCategory = button.dataset.sheetCat
+        renderCategories()
+        renderProducts()
+        closeCategorySheet()
+    })
 
 
 /* ========================================
