@@ -1,0 +1,988 @@
+/*
+=========================================================
+CHAIXI BAMEEKIAO POS MAIN
+UI FEEDBACK V3.0 — PHASE 1
+=========================================================
+- Tap sound on actionable buttons
+- Success / Warning / Error sound
+- Press visual feedback
+- Message observer
+- Toast feedback
+- Web Audio only: no external audio files
+=========================================================
+*/
+
+let audioContext = null
+let soundEnabled = true
+let lastMessageSignature = ''
+let lastMessageAt = 0
+
+
+function ensureAudio() {
+
+    if (!soundEnabled) {
+        return null
+    }
+
+
+    if (!audioContext) {
+
+        const AudioContextClass =
+            window.AudioContext
+            ||
+            window.webkitAudioContext
+
+
+        if (!AudioContextClass) {
+            return null
+        }
+
+
+        audioContext =
+            new AudioContextClass()
+    }
+
+
+    if (
+        audioContext.state ===
+        'suspended'
+    ) {
+        audioContext.resume()
+            .catch(() => {})
+    }
+
+
+    return audioContext
+}
+
+
+function tone({
+    frequency = 520,
+    duration = .05,
+    gain = .035,
+    type = 'sine',
+    delay = 0
+} = {}) {
+
+    const ctx =
+        ensureAudio()
+
+
+    if (!ctx) {
+        return
+    }
+
+
+    const oscillator =
+        ctx.createOscillator()
+
+
+    const volume =
+        ctx.createGain()
+
+
+    const start =
+        ctx.currentTime
+        +
+        delay
+
+
+    const end =
+        start
+        +
+        duration
+
+
+    oscillator.type =
+        type
+
+
+    oscillator.frequency
+        .setValueAtTime(
+            frequency,
+            start
+        )
+
+
+    volume.gain
+        .setValueAtTime(
+            0.0001,
+            start
+        )
+
+
+    volume.gain
+        .exponentialRampToValueAtTime(
+            Math.max(
+                gain,
+                0.0002
+            ),
+            start + .008
+        )
+
+
+    volume.gain
+        .exponentialRampToValueAtTime(
+            0.0001,
+            end
+        )
+
+
+    oscillator
+        .connect(volume)
+
+
+    volume
+        .connect(
+            ctx.destination
+        )
+
+
+    oscillator.start(start)
+    oscillator.stop(end + .02)
+}
+
+
+export function uiTap() {
+
+    tone({
+        frequency: 560,
+        duration: .035,
+        gain: .022,
+        type: 'sine'
+    })
+}
+
+
+export function uiMenuTap() {
+
+    /*
+     * V3.0.2
+     * เพิ่มความดังเชิงรับรู้สำหรับลำโพงมือถือ
+     * - ใช้ย่านกลางที่ลำโพงมือถือขับได้ชัด
+     * - เพิ่ม gain
+     * - ใช้ triangle เพื่อให้มี harmonic มากกว่า sine
+     * - คงเอกลักษณ์เสียง 2 จังหวะ
+     */
+    tone({
+        frequency: 720,
+        duration: .060,
+        gain: .120,
+        type: 'triangle'
+    })
+
+    tone({
+        frequency: 980,
+        duration: .055,
+        gain: .095,
+        type: 'triangle',
+        delay: .045
+    })
+
+    /*
+     * ชั้นเสียงเสริมสั้น ๆ ให้ punch ชัดขึ้น
+     * โดยไม่ยืดเสียงจนรบกวนการขาย
+     */
+    tone({
+        frequency: 360,
+        duration: .040,
+        gain: .060,
+        type: 'square',
+        delay: .004
+    })
+}
+
+
+export function uiSuccess() {
+
+    tone({
+        frequency: 620,
+        duration: .055,
+        gain: .035
+    })
+
+    tone({
+        frequency: 880,
+        duration: .09,
+        gain: .038,
+        delay: .065
+    })
+}
+
+
+export function uiWarning() {
+
+    tone({
+        frequency: 420,
+        duration: .09,
+        gain: .04,
+        type: 'triangle'
+    })
+
+    tone({
+        frequency: 350,
+        duration: .11,
+        gain: .038,
+        type: 'triangle',
+        delay: .09
+    })
+}
+
+
+export function uiError() {
+
+    tone({
+        frequency: 240,
+        duration: .12,
+        gain: .045,
+        type: 'square'
+    })
+
+    tone({
+        frequency: 190,
+        duration: .14,
+        gain: .04,
+        type: 'square',
+        delay: .12
+    })
+}
+
+
+export function uiConfirmTap() {
+
+    /*
+     * V3.0.6
+     * ปุ่มยืนยันสำคัญ:
+     * เสียงแน่นกว่าปุ่มทั่วไป แต่ไม่ใช่เสียง Success
+     */
+    tone({
+        frequency: 540,
+        duration: .055,
+        gain: .090,
+        type: 'triangle'
+    })
+
+    tone({
+        frequency: 720,
+        duration: .055,
+        gain: .070,
+        type: 'triangle',
+        delay: .045
+    })
+}
+
+
+export function uiDangerTap() {
+
+    /*
+     * V3.0.6
+     * ปุ่มลบ / ล้าง / ยกเลิก:
+     * ใช้เสียงต่ำ 2 จังหวะเพื่อเตือน
+     */
+    tone({
+        frequency: 310,
+        duration: .070,
+        gain: .080,
+        type: 'triangle'
+    })
+
+    tone({
+        frequency: 245,
+        duration: .065,
+        gain: .065,
+        type: 'triangle',
+        delay: .055
+    })
+}
+
+
+function toastHost() {
+
+    let host =
+        document.getElementById(
+            'uiFeedbackToastHost'
+        )
+
+
+    if (!host) {
+
+        host =
+            document.createElement(
+                'div'
+            )
+
+
+        host.id =
+            'uiFeedbackToastHost'
+
+
+        document.body
+            .appendChild(
+                host
+            )
+    }
+
+
+    return host
+}
+
+
+export function uiToast(
+    text,
+    type = 'info',
+    timeout = 1800
+) {
+
+    const clean =
+        String(
+            text ||
+            ''
+        ).trim()
+
+
+    if (!clean) {
+        return
+    }
+
+
+    const item =
+        document.createElement(
+            'div'
+        )
+
+
+    item.className =
+        `ui-feedback-toast ${type}`
+
+
+    item.textContent =
+        clean
+
+
+    toastHost()
+        .appendChild(
+            item
+        )
+
+
+    setTimeout(
+        () => {
+
+            item.remove()
+
+        },
+        timeout
+    )
+}
+
+
+function classifyMessage(
+    text
+) {
+
+    const value =
+        String(
+            text ||
+            ''
+        )
+            .trim()
+            .toLowerCase()
+
+
+    if (!value) {
+        return null
+    }
+
+
+    const successWords = [
+        'สำเร็จ',
+        'ยืนยันออเดอร์แล้ว',
+        'ส่งเข้าครัว',
+        'อนุมัติส่วนลด',
+        'ใช้โปรโมชั่นแล้ว',
+        'ใช้คูปอง'
+    ]
+
+
+    const warningWords = [
+        'กรุณา',
+        'ยังไม่ได้',
+        'ไม่มีสิทธิ์',
+        'ไม่สามารถ',
+        'ไม่ครบ',
+        'หมด',
+        'เกิน',
+        'ถูกยกเลิก',
+        'ตรวจสอบยอดใหม่'
+    ]
+
+
+    if (
+        successWords.some(
+            word =>
+                value.includes(word)
+        )
+    ) {
+        return 'success'
+    }
+
+
+    if (
+        warningWords.some(
+            word =>
+                value.includes(word)
+        )
+    ) {
+        return 'warning'
+    }
+
+
+    return 'error'
+}
+
+
+function feedbackForMessage(
+    target
+) {
+
+    const text =
+        target?.textContent
+            ?.trim()
+        ||
+        ''
+
+
+    target?.classList
+        .remove(
+            'ui-message-success',
+            'ui-message-warning'
+        )
+
+
+    if (!text) {
+        return
+    }
+
+
+    const type =
+        classifyMessage(text)
+
+
+    if (
+        type ===
+        'success'
+    ) {
+
+        target.classList
+            .add(
+                'ui-message-success'
+            )
+
+    } else if (
+        type ===
+        'warning'
+    ) {
+
+        target.classList
+            .add(
+                'ui-message-warning'
+            )
+    }
+
+
+    const now =
+        Date.now()
+
+
+    const signature =
+        `${type}:${text}`
+
+
+    if (
+        signature ===
+        lastMessageSignature
+        &&
+        now - lastMessageAt <
+        900
+    ) {
+        return
+    }
+
+
+    lastMessageSignature =
+        signature
+
+    lastMessageAt =
+        now
+
+
+    if (
+        type ===
+        'success'
+    ) {
+
+        uiSuccess()
+
+    } else if (
+        type ===
+        'warning'
+    ) {
+
+        uiWarning()
+
+    } else {
+
+        uiError()
+    }
+}
+
+
+function observeMessages() {
+
+    document
+        .querySelectorAll(
+            '.message'
+        )
+        .forEach(
+            target => {
+
+                const observer =
+                    new MutationObserver(
+                        () =>
+                            feedbackForMessage(
+                                target
+                            )
+                    )
+
+
+                observer.observe(
+                    target,
+                    {
+                        childList: true,
+                        characterData: true,
+                        subtree: true
+                    }
+                )
+
+
+                feedbackForMessage(
+                    target
+                )
+            }
+        )
+}
+
+
+function bindPressFeedback() {
+
+    document.addEventListener(
+        'pointerdown',
+        event => {
+
+            const target =
+                event.target.closest(
+                    'button,[role="button"]'
+                )
+
+
+            if (!target) {
+                return
+            }
+
+
+            ensureAudio()
+
+
+            if (
+                target.disabled
+                ||
+                target.getAttribute(
+                    'aria-disabled'
+                )
+                ===
+                'true'
+            ) {
+
+                uiWarning()
+                return
+            }
+
+
+            target.classList
+                .add(
+                    'ui-pressed'
+                )
+        },
+        {
+            capture: true
+        }
+    )
+
+
+    const release =
+        event => {
+
+            const target =
+                event.target.closest(
+                    'button,[role="button"]'
+                )
+
+
+            target?.classList
+                .remove(
+                    'ui-pressed'
+                )
+        }
+
+
+    document.addEventListener(
+        'pointerup',
+        release,
+        {
+            capture: true
+        }
+    )
+
+
+    document.addEventListener(
+        'pointercancel',
+        release,
+        {
+            capture: true
+        }
+    )
+
+
+    document.addEventListener(
+        'click',
+        event => {
+
+            const target =
+                event.target.closest(
+                    'button,[role="button"]'
+                )
+
+
+            if (
+                !target
+                ||
+                target.disabled
+            ) {
+                return
+            }
+
+
+            /*
+             * V3.0.3
+             * ปุ่มสำคัญในหน้าเริ่มออเดอร์ใช้เสียงเดียวกับเมนูอาหาร
+             * เพราะเสียง Tap ปกติเบาเกินไปบน iPhone
+             */
+            const card =
+                target.closest(
+                    '.product-card'
+                )
+
+
+            const strongTapTarget =
+                card
+                ||
+                target.closest('.tab')
+                ||
+                target.closest('.order-type-btn')
+                ||
+                target.closest('.table-select-btn')
+                ||
+                target.closest('#guestMinusBtn')
+                ||
+                target.closest('#guestPlusBtn')
+                ||
+                target.closest('#startOrderBtn')
+                ||
+                target.closest('#holdTableBtn')
+                ||
+                target.closest('#backToDashboardBtn')
+                ||
+                target.closest('[data-act="inc"]')
+                ||
+                target.closest('[data-act="dec"]')
+                ||
+                target.closest('[data-cash]')
+                ||
+                target.closest('.method')
+
+
+            const confirmTarget =
+                target.closest('#confirmOrderBtn')
+                ||
+                target.closest('#checkoutBtn')
+                ||
+                target.closest('#confirmPaymentBtn')
+                ||
+                target.closest('#confirmManualDiscountBtn')
+                ||
+                target.closest('#applyPromotionBtn')
+                ||
+                target.closest('#applyCouponBtn')
+                ||
+                target.closest('#manualDiscountBtn')
+                ||
+                target.closest('#newSaleBtn')
+                ||
+                target.closest('#printReceiptBtn')
+
+
+            const dangerTarget =
+                target.closest('[data-act="remove"]')
+                ||
+                target.closest('#clearCartBtn')
+                ||
+                target.closest('#cancelPaymentBtn')
+                ||
+                target.closest('#closePaymentBtn')
+                ||
+                target.closest('#closeManualDiscountBtn')
+                ||
+                target.closest('#cancelManualDiscountBtn')
+                ||
+                target.closest('#closeOrderStartBtn')
+
+
+            if (dangerTarget) {
+
+                uiDangerTap()
+
+            } else if (confirmTarget) {
+
+                uiConfirmTap()
+
+            } else if (strongTapTarget) {
+
+                uiMenuTap()
+
+            } else {
+
+                uiTap()
+            }
+
+
+            /*
+             * Product card gets short visual flash
+             */
+            if (card) {
+
+                card.classList
+                    .add(
+                        'ui-flash'
+                    )
+
+
+                setTimeout(
+                    () =>
+                        card.classList
+                            .remove(
+                                'ui-flash'
+                            ),
+                    180
+                )
+            }
+
+
+            /*
+             * หน้าเริ่มออเดอร์:
+             * ให้ปุ่มที่กดมี flash สั้น ๆ เพื่อเห็นชัดว่าระบบรับการกดแล้ว
+             */
+            const feedbackTarget =
+                dangerTarget
+                ||
+                confirmTarget
+                ||
+                (
+                    strongTapTarget
+                    &&
+                    !card
+                        ? strongTapTarget
+                        : null
+                )
+
+
+            if (feedbackTarget) {
+
+                feedbackTarget.classList
+                    .add(
+                        'ui-flash'
+                    )
+
+
+                setTimeout(
+                    () =>
+                        feedbackTarget.classList
+                            .remove(
+                                'ui-flash'
+                            ),
+                    180
+                )
+            }
+        },
+        {
+            capture: true
+        }
+    )
+}
+
+
+function observeBusyButtons() {
+
+    const observer =
+        new MutationObserver(
+            records => {
+
+                for (
+                    const record
+                    of
+                    records
+                ) {
+
+                    const target =
+                        record.target
+
+
+                    if (
+                        !(
+                            target
+                            instanceof
+                            HTMLButtonElement
+                        )
+                    ) {
+                        continue
+                    }
+
+
+                    const text =
+                        target.textContent
+                            ?.trim()
+                        ||
+                        ''
+
+
+                    const busy =
+                        target.disabled
+                        &&
+                        (
+                            text.includes(
+                                'กำลัง'
+                            )
+                            ||
+                            text.includes(
+                                'ตรวจสอบ'
+                            )
+                        )
+
+
+                    target.classList
+                        .toggle(
+                            'ui-busy',
+                            busy
+                        )
+                }
+            }
+        )
+
+
+    document
+        .querySelectorAll(
+            'button'
+        )
+        .forEach(
+            button =>
+                observer.observe(
+                    button,
+                    {
+                        attributes: true,
+                        attributeFilter: [
+                            'disabled'
+                        ],
+                        childList: true,
+                        characterData: true,
+                        subtree: true
+                    }
+                )
+        )
+}
+
+
+function unlockAudioOnce() {
+
+    const unlock =
+        () => {
+
+            ensureAudio()
+
+
+            document.removeEventListener(
+                'pointerdown',
+                unlock,
+                true
+            )
+
+
+            document.removeEventListener(
+                'touchstart',
+                unlock,
+                true
+            )
+        }
+
+
+    document.addEventListener(
+        'pointerdown',
+        unlock,
+        true
+    )
+
+
+    document.addEventListener(
+        'touchstart',
+        unlock,
+        true
+    )
+}
+
+
+function initUiFeedback() {
+
+    unlockAudioOnce()
+    bindPressFeedback()
+    observeMessages()
+    observeBusyButtons()
+
+
+    window.JOKJUNG_UI_FEEDBACK = {
+        tap: uiTap,
+        menuTap: uiMenuTap,
+        confirmTap: uiConfirmTap,
+        dangerTap: uiDangerTap,
+        success: uiSuccess,
+        warning: uiWarning,
+        error: uiError,
+        toast: uiToast
+    }
+}
+
+
+if (
+    document.readyState ===
+    'loading'
+) {
+
+    document.addEventListener(
+        'DOMContentLoaded',
+        initUiFeedback,
+        {
+            once: true
+        }
+    )
+
+} else {
+
+    initUiFeedback()
+}
