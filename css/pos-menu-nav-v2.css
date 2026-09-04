@@ -182,3 +182,54 @@
     box-shadow: none !important;
   }
 }
+
+
+/* =========================================================
+   HOTFIX: remove yellow focus highlight around search field
+   - iPhone Safari / input focus ring
+   ========================================================= */
+@media (max-width: 1024px) {
+  html[data-ui-page="pos"] #searchPanel .search-field-wrap,
+  html[data-ui-page="pos"] #searchPanel .search-field-wrap:hover,
+  html[data-ui-page="pos"] #searchPanel .search-field-wrap:active,
+  html[data-ui-page="pos"] #searchPanel .search-field-wrap:focus,
+  html[data-ui-page="pos"] #searchPanel .search-field-wrap:focus-visible,
+  html[data-ui-page="pos"] #searchPanel .search-field-wrap:focus-within {
+    border: 1px solid #d0d5dd !important;
+    outline: none !important;
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    background: #ffffff !important;
+  }
+
+  html[data-ui-page="pos"] #searchPanel #searchInput,
+  html[data-ui-page="pos"] #searchPanel #searchInput:hover,
+  html[data-ui-page="pos"] #searchPanel #searchInput:active,
+  html[data-ui-page="pos"] #searchPanel #searchInput:focus,
+  html[data-ui-page="pos"] #searchPanel #searchInput:focus-visible {
+    border: 0 !important;
+    outline: none !important;
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    background: transparent !important;
+  }
+
+  html[data-ui-page="pos"] #searchPanel #searchInput::-webkit-search-decoration,
+  html[data-ui-page="pos"] #searchPanel #searchInput::-webkit-search-cancel-button,
+  html[data-ui-page="pos"] #searchPanel #searchInput::-webkit-search-results-button,
+  html[data-ui-page="pos"] #searchPanel #searchInput::-webkit-search-results-decoration {
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    display: none !important;
+  }
+
+  html[data-ui-page="pos"] #searchPanel .search-back-btn,
+  html[data-ui-page="pos"] #searchPanel .search-clear-btn {
+    outline: none !important;
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    -webkit-tap-highlight-color: transparent !important;
+  }
+}
