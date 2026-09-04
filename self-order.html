@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <title>สั่งกลับบ้าน | CHAIXI BAMEEKIAO</title>
     <link rel="stylesheet" href="./css/self-order.css?v=4.4.1">
+    <link rel="stylesheet" href="./css/customer-menu-nav-v1.css?v=20260904-1944">
 </head>
 <body>
     <header class="customer-header">
@@ -35,11 +36,35 @@
             </div>
             <div id="sessionCountdownCard" class="session-countdown-card hidden"><div><small>เวลาที่เหลือสำหรับเลือกอาหาร</small><strong id="sessionCountdownText">20:00</strong></div><p>เมื่อหมดเวลา ต้องสแกน QR หน้าร้านใหม่อีกครั้ง</p></div>
 
-            <div class="menu-toolbar">
-                <input id="searchInput" type="search" placeholder="ค้นหาเมนู" autocomplete="off">
+            <div class="customer-catalog-nav">
+                <div class="customer-nav-actions">
+                    <button id="searchToggleBtn" class="customer-nav-icon-btn" type="button" aria-label="ค้นหาเมนู" title="ค้นหาเมนู">
+                        <span class="customer-search-icon" aria-hidden="true"></span>
+                    </button>
+                    <button id="categoryMenuBtn" class="customer-nav-icon-btn" type="button" aria-label="เลือกหมวดเมนู" title="เลือกหมวดเมนู">
+                        <span class="customer-list-icon" aria-hidden="true"><i></i><i></i><i></i></span>
+                    </button>
+                </div>
+                <div id="categoryTabs" class="category-tabs" aria-label="หมวดเมนู"></div>
             </div>
 
-            <div id="categoryTabs" class="category-tabs"></div>
+            <div id="searchPanel" class="customer-search-panel hidden">
+                <button id="searchCloseBtn" class="customer-search-back" type="button" aria-label="ปิดการค้นหา">←</button>
+                <div class="customer-search-field">
+                    <span class="customer-search-icon" aria-hidden="true"></span>
+                    <input id="searchInput" type="search" placeholder="ค้นหาเมนูอาหาร" autocomplete="off">
+                    <button id="searchClearBtn" class="customer-search-clear hidden" type="button" aria-label="ล้างคำค้นหา">×</button>
+                </div>
+            </div>
+
+            <div id="categorySheet" class="customer-category-sheet hidden" aria-hidden="true">
+                <button class="customer-category-backdrop" type="button" data-close-category-sheet aria-label="ปิดรายการหมวด"></button>
+                <div class="customer-category-sheet-card" role="dialog" aria-modal="true" aria-label="เลือกหมวดเมนู">
+                    <div class="customer-category-sheet-title">หมวดเมนู</div>
+                    <div id="categorySheetList" class="customer-category-sheet-list"></div>
+                </div>
+            </div>
+
             <div id="menuLoading" class="state">กำลังโหลดเมนู...</div>
             <div id="menuEmpty" class="state hidden">ไม่พบเมนู</div>
             <section id="productGrid" class="product-grid hidden"></section>
@@ -231,6 +256,6 @@
     </button>
 
     <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
-    <script type="module" src="./js/self-order.js?v=4.9.2"></script>
+    <script type="module" src="./js/self-order.js?v=20260904-1944"></script>
 </body>
 </html>
