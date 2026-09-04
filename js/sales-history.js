@@ -1008,6 +1008,9 @@ async function openSaleDetail(
         .classList
         .remove('hidden')
 
+    document.documentElement.classList.add('sales-detail-open')
+    document.body.classList.add('sales-detail-open')
+
 
     el.detailInvoice.textContent =
         sale.invoice_no ||
@@ -2351,6 +2354,10 @@ function closeDetail() {
     el.detailModal
         .classList
         .add('hidden')
+
+
+    document.documentElement.classList.remove('sales-detail-open')
+    document.body.classList.remove('sales-detail-open')
 
 
     state.selectedSale =
