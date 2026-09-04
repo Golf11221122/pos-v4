@@ -1142,3 +1142,84 @@
     th { background: #f8fafc !important; }
     tr:hover td { background: #fcfcfd !important; }
 }
+
+
+/* UI REFRESH V4.1 fixes - management menu visibility on light sidebar */
+@media screen {
+    .management-toggle {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        width: 100% !important;
+        min-height: 54px !important;
+        padding: 12px 14px !important;
+        border: 1px solid #eceff3 !important;
+        border-radius: 14px !important;
+        background: #fff !important;
+        color: #344054 !important;
+        box-shadow: 0 6px 18px rgba(16,24,40,.04) !important;
+    }
+    .management-toggle:hover,
+    .management-toggle.open {
+        background: linear-gradient(180deg,#fff5f4 0%,#fff1f0 100%) !important;
+        border-color: #f0d1cf !important;
+        color: #b3261e !important;
+    }
+    .management-title,
+    .management-title span {
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 10px !important;
+        color: inherit !important;
+        font-weight: 800 !important;
+    }
+    .management-toggle .menu-icon {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 36px !important;
+        height: 36px !important;
+        border-radius: 12px !important;
+        background: var(--jj-accent-soft) !important;
+        color: var(--jj-accent) !important;
+        border: 1px solid #f0d1cf !important;
+    }
+    .management-arrow {
+        color: inherit !important;
+        opacity: .8;
+        font-size: 18px !important;
+        font-weight: 800 !important;
+    }
+    .management-menu {
+        border-left: 2px solid #f1e4e2 !important;
+        margin: 8px 0 4px 17px !important;
+        padding-left: 12px !important;
+    }
+    .management-menu .menu-item {
+        min-height: 46px !important;
+        padding: 10px 12px !important;
+        font-weight: 700 !important;
+    }
+}
+@media (max-width:760px) {
+    .sidebar {
+        width: min(86vw, 360px) !important;
+        padding-bottom: calc(12px + env(safe-area-inset-bottom)) !important;
+    }
+    .sidebar .brand {
+        padding: 2px 4px 12px !important;
+    }
+    .sidebar-menu .menu-scroll {
+        padding-bottom: 8px !important;
+    }
+    .menu-item,
+    .management-toggle {
+        min-height: 46px !important;
+        padding: 10px 12px !important;
+        margin-bottom: 4px !important;
+    }
+    .logout-button {
+        min-height: 52px !important;
+        font-weight: 800 !important;
+    }
+}
