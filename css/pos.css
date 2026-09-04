@@ -4477,3 +4477,113 @@ body.category-sheet-open { overflow: hidden; }
     .catalog-nav .tabs { gap: 26px; }
     .catalog-secondary-actions { margin-bottom: 8px; }
 }
+
+/* =========================================================
+   CHAIXI POS — HOTFIX 2026-09-04
+   Force reference-style single-row category navigation on mobile.
+   This block intentionally overrides older sticky/pill tab rules.
+   ========================================================= */
+@media (max-width: 768px) {
+    .catalog-nav {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        flex-wrap: nowrap !important;
+        gap: 8px !important;
+        min-height: 58px !important;
+        margin: 0 -10px 10px !important;
+        padding: 0 10px !important;
+        overflow: hidden !important;
+        background: #fff !important;
+        border-bottom: 1px solid var(--border) !important;
+    }
+
+    .catalog-nav-actions {
+        display: flex !important;
+        flex: 0 0 auto !important;
+        align-items: center !important;
+        gap: 2px !important;
+        width: auto !important;
+        min-width: 92px !important;
+    }
+
+    .catalog-icon-btn {
+        flex: 0 0 44px !important;
+        width: 44px !important;
+        height: 56px !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+    }
+
+    .catalog-nav #categoryTabs.tabs {
+        position: static !important;
+        top: auto !important;
+        z-index: auto !important;
+        display: flex !important;
+        flex: 1 1 auto !important;
+        flex-flow: row nowrap !important;
+        align-items: stretch !important;
+        gap: 24px !important;
+        width: auto !important;
+        min-width: 0 !important;
+        height: 58px !important;
+        margin: 0 !important;
+        padding: 0 4px !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        scrollbar-width: none !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+
+    .catalog-nav #categoryTabs.tabs::-webkit-scrollbar {
+        display: none !important;
+    }
+
+    .catalog-nav #categoryTabs.tabs > .tab {
+        position: relative !important;
+        display: inline-flex !important;
+        flex: 0 0 auto !important;
+        width: auto !important;
+        min-width: max-content !important;
+        min-height: 58px !important;
+        height: 58px !important;
+        align-items: center !important;
+        justify-content: center !important;
+        margin: 0 !important;
+        padding: 0 2px !important;
+        border: 0 !important;
+        border-radius: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        color: #667085 !important;
+        font-size: 16px !important;
+        font-weight: 700 !important;
+        line-height: 1 !important;
+        white-space: nowrap !important;
+    }
+
+    .catalog-nav #categoryTabs.tabs > .tab.active {
+        border: 0 !important;
+        border-radius: 0 !important;
+        background: transparent !important;
+        color: #b42318 !important;
+        box-shadow: none !important;
+    }
+
+    .catalog-nav #categoryTabs.tabs > .tab.active::after {
+        content: '' !important;
+        position: absolute !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        height: 3px !important;
+        border-radius: 999px 999px 0 0 !important;
+        background: #b42318 !important;
+    }
+}
