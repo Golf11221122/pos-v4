@@ -1979,3 +1979,145 @@ button[data-action="print"]{
 
 /* Existing @media print remains authoritative. */
 
+
+
+/* =========================================================
+   CHAIXI HOTFIX — Sales detail mobile scroll / compact layout
+   2026-09-04
+   ========================================================= */
+html.sales-detail-open,
+body.sales-detail-open{
+    overflow:hidden!important;
+}
+
+#detailModal{
+    overscroll-behavior:contain!important;
+}
+
+#detailModal .detail-modal{
+    overflow-y:auto!important;
+    overflow-x:hidden!important;
+    overscroll-behavior:contain!important;
+    -webkit-overflow-scrolling:touch!important;
+    touch-action:pan-y!important;
+}
+
+@media(max-width:720px){
+    #detailModal{
+        padding:10px 8px 0!important;
+    }
+
+    #detailModal .detail-modal{
+        width:100%!important;
+        max-width:100%!important;
+        max-height:calc(100svh - 10px)!important;
+        padding:0 14px max(16px,env(safe-area-inset-bottom))!important;
+        border-radius:20px 20px 0 0!important;
+    }
+
+    #detailModal .modal-head{
+        margin:0 -14px 10px!important;
+        padding:13px 14px!important;
+    }
+
+    #detailModal .modal-head h2{
+        font-size:19px!important;
+    }
+
+    #detailModal .modal-head small{
+        font-size:12px!important;
+    }
+
+    #detailModal .detail-info-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr))!important;
+        gap:7px!important;
+        padding:9px!important;
+    }
+
+    #detailModal .detail-info-grid div{
+        gap:2px!important;
+        min-width:0!important;
+    }
+
+    #detailModal .detail-info-grid span{
+        font-size:10px!important;
+    }
+
+    #detailModal .detail-info-grid strong{
+        font-size:14px!important;
+        overflow-wrap:anywhere!important;
+    }
+
+    #detailModal .detail-items{
+        margin-top:12px!important;
+    }
+
+    #detailModal .detail-items h3{
+        margin-bottom:5px!important;
+        font-size:18px!important;
+    }
+
+    #detailModal .detail-item{
+        gap:10px!important;
+        padding:8px 0!important;
+    }
+
+    #detailModal .detail-item strong{
+        font-size:14px!important;
+    }
+
+    #detailModal .detail-item small{
+        margin-top:2px!important;
+        font-size:12px!important;
+    }
+
+    #detailModal .detail-summary{
+        grid-template-columns:repeat(2,minmax(0,1fr))!important;
+        gap:7px!important;
+        margin:10px 0!important;
+        padding:0!important;
+        background:transparent!important;
+    }
+
+    #detailModal .detail-summary>div{
+        min-height:60px!important;
+        padding:9px 10px!important;
+    }
+
+    #detailModal .detail-summary span{
+        font-size:10px!important;
+    }
+
+    #detailModal .detail-summary strong{
+        margin-top:3px!important;
+        font-size:16px!important;
+    }
+
+    #detailModal .grand-total{
+        margin:0!important;
+        border:1px solid #e4e7ec!important;
+    }
+
+    #detailModal .note-box,
+    #detailModal .refund-box{
+        margin-top:10px!important;
+        padding:10px!important;
+    }
+
+    #detailModal .modal-actions{
+        position:sticky!important;
+        bottom:calc(-1 * max(16px,env(safe-area-inset-bottom)))!important;
+        z-index:4!important;
+        gap:7px!important;
+        margin:10px -14px calc(-1 * max(16px,env(safe-area-inset-bottom)))!important;
+        padding:10px 14px max(10px,env(safe-area-inset-bottom))!important;
+        background:rgba(255,255,255,.97)!important;
+        border-top:1px solid #e9edf1!important;
+    }
+
+    #detailModal .modal-actions button{
+        min-height:40px!important;
+        padding:8px 9px!important;
+        font-size:12px!important;
+    }
+}
