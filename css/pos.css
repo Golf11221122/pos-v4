@@ -4093,3 +4093,46 @@ button.ui-flash {
     }
 }
 
+
+
+/* =========================================================
+   UI REFRESH V4.0 POS terminal overrides
+   ========================================================= */
+:root {
+    --primary: #b3261e;
+    --primary-dark: #8f1d18;
+    --primary-light: #fff1f0;
+    --background: #f4f6fb;
+    --border: #e5e7eb;
+    --text: #182230;
+    --muted: #667085;
+}
+body { background: linear-gradient(180deg,#fbfcff 0%,#f4f6fb 100%) !important; color: var(--text); }
+.topbar { min-height: 74px; padding: 12px 20px; background: rgba(255,255,255,.88); backdrop-filter: blur(14px); border-bottom: 1px solid var(--border); box-shadow: 0 2px 10px rgba(16,24,40,.04); }
+.topbar-brand strong { font-size: 17px; letter-spacing: -.02em; }
+.layout { gap: 18px; padding: 18px; min-height: calc(100vh - 74px); }
+.catalog { padding: 0; }
+.toolbar { position: sticky; top: 88px; z-index: 15; grid-template-columns: minmax(0,1fr) auto auto; padding: 14px; margin-bottom: 14px; border: 1px solid var(--border); border-radius: 20px; background: rgba(255,255,255,.94); box-shadow: 0 10px 28px rgba(16,24,40,.05); backdrop-filter: blur(10px); }
+.toolbar input { min-height: 48px; border-radius: 14px; }
+.tabs { display:flex; flex-wrap:wrap; gap:10px; margin: 0 0 16px; padding: 0 2px; }
+.tabs > * { border-radius: 999px !important; box-shadow: 0 2px 10px rgba(16,24,40,.03); }
+.product-grid { gap: 14px; }
+.product-card,.product-btn,.menu-product,.item-card { border: 1px solid var(--border) !important; border-radius: 18px !important; background: rgba(255,255,255,.96) !important; box-shadow: 0 10px 22px rgba(16,24,40,.04); }
+.product-card:hover,.product-btn:hover,.menu-product:hover,.item-card:hover { transform: translateY(-1px); box-shadow: 0 14px 26px rgba(16,24,40,.06); }
+.cart { position: sticky; top: 92px; height: calc(100vh - 110px); border: 1px solid var(--border); border-radius: 24px; background: rgba(255,255,255,.96); box-shadow: 0 16px 36px rgba(16,24,40,.06); }
+.cart-head { padding-bottom: 12px; border-bottom: 1px solid #eef2f6; }
+.cart-items { padding-right: 4px; }
+.cart-item,.order-item,.cart-row { border: 1px solid #edf0f3 !important; border-radius: 16px !important; background: #fcfcfd !important; }
+.summary { margin-top: auto; padding: 16px; border-top: 1px solid #eef2f6; background: linear-gradient(180deg,rgba(255,255,255,0) 0%,rgba(255,255,255,.96) 18%); }
+.total { margin-top: 8px; padding: 12px 14px; border-radius: 16px; background: var(--primary-light); }
+.confirm-order-btn,.hold-table-btn,#checkoutBtn { min-height: 48px; border-radius: 14px; }
+.confirm-order-btn,.hold-table-btn,#checkoutBtn,.primary-btn { background: linear-gradient(180deg,#c6342b 0%,#a7241d 100%) !important; border-color:#9a241e !important; color:#fff !important; box-shadow:0 10px 22px rgba(179,38,30,.18) !important; }
+.outline-btn,.icon-btn,.danger-link { border-radius: 12px; }
+.message { margin-top: 10px; }
+.state { padding: 28px; border: 1px dashed #d7dde5; border-radius: 18px; background: rgba(255,255,255,.85); color: var(--muted); }
+@media (max-width: 960px) {
+    .layout { grid-template-columns: 1fr; padding: 12px; }
+    .toolbar { top: 78px; grid-template-columns: 1fr 1fr; }
+    .toolbar > :first-child { grid-column: 1 / -1; }
+    .cart { position: fixed; top: auto; right: 10px; left: 10px; bottom: 10px; height: min(78vh, 720px); border-radius: 24px; }
+}

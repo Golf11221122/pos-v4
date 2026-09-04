@@ -953,3 +953,192 @@
 
     /* Respect existing reduced-motion rule already declared above */
 }
+
+
+/* =========================================================
+   UI REFRESH V4.0 — CHAIXI modern shell overrides
+   ========================================================= */
+@media screen {
+    :root {
+        --jj-navy: #20293b;
+        --jj-navy-2: #2f3c54;
+        --jj-gold: #e7ab34;
+        --jj-gold-soft: #fff8ea;
+        --jj-accent: #b3261e;
+        --jj-accent-soft: #fff1f0;
+        --jj-bg: #f4f6fb;
+        --jj-surface: #ffffff;
+        --jj-surface-soft: #fafbfd;
+        --jj-text: #182230;
+        --jj-muted: #667085;
+        --jj-border: #e5e7eb;
+    }
+
+    html,
+    body {
+        background: linear-gradient(180deg, #fbfcff 0%, #f4f6fb 100%) !important;
+        color: var(--jj-text) !important;
+    }
+
+    .app-layout,
+    .layout {
+        background: transparent;
+    }
+
+    .sidebar {
+        background: linear-gradient(180deg, #ffffff 0%, #fbfbfd 100%) !important;
+        color: var(--jj-text) !important;
+        border-right: 1px solid #e7ebf0 !important;
+        box-shadow: 14px 0 34px rgba(16,24,40,.05) !important;
+    }
+
+    .brand h1,
+    .brand p,
+    .brand strong,
+    .brand small {
+        color: var(--jj-text) !important;
+    }
+
+    .brand p {
+        color: var(--jj-muted) !important;
+    }
+
+    .brand-icon,
+    .summary-icon,
+    .quick-action > span,
+    .menu-icon-box {
+        background: var(--jj-accent-soft) !important;
+        color: var(--jj-accent) !important;
+        border: 1px solid #f0d1cf !important;
+    }
+
+    .menu-item,
+    .sidebar-menu a,
+    .sidebar-link {
+        color: #475467 !important;
+        border: 1px solid transparent;
+        border-radius: 14px !important;
+        background: transparent !important;
+    }
+
+    .menu-item:hover,
+    .sidebar-menu a:hover,
+    .sidebar-link:hover {
+        background: #fff !important;
+        border-color: #eceff3 !important;
+        box-shadow: 0 6px 18px rgba(16,24,40,.05) !important;
+        color: var(--jj-text) !important;
+    }
+
+    .menu-item.active,
+    .sidebar-menu a.active,
+    .sidebar-link.active {
+        background: linear-gradient(180deg, #fff5f4 0%, #fff1f0 100%) !important;
+        border-color: #f0d1cf !important;
+        color: var(--jj-accent) !important;
+        box-shadow: 0 10px 24px rgba(179,38,30,.08) !important;
+        font-weight: 800 !important;
+    }
+
+    .topbar,
+    .page-topbar,
+    .header {
+        background: rgba(255,255,255,.88) !important;
+        backdrop-filter: blur(14px);
+        border-bottom: 1px solid #e5e7eb !important;
+        box-shadow: 0 2px 10px rgba(16,24,40,.04) !important;
+    }
+
+    .page-content,
+    .dashboard-content,
+    main,
+    .catalog,
+    .content {
+        color: var(--jj-text) !important;
+    }
+
+    .panel,
+    .summary-card,
+    .metric-card,
+    .modal-card,
+    .card,
+    .cart,
+    .cart-item,
+    .product-card,
+    .payment-section,
+    .table-card,
+    .report-card,
+    .stat-card {
+        background: rgba(255,255,255,.96) !important;
+        border-color: #e5e7eb !important;
+        border-radius: 18px !important;
+        box-shadow: 0 10px 28px rgba(16,24,40,.05) !important;
+    }
+
+    .summary-card::before,
+    .metric-card::before {
+        background: linear-gradient(180deg, var(--jj-accent) 0%, #ef9a94 100%) !important;
+    }
+
+    .primary-btn,
+    .confirm-order-btn,
+    .checkout-btn,
+    .hold-table-btn,
+    .primary,
+    .primary-button,
+    button[type="submit"] {
+        background: linear-gradient(180deg, #c6342b 0%, #a7241d 100%) !important;
+        border-color: #9a241e !important;
+        color: #fff !important;
+        box-shadow: 0 10px 22px rgba(179,38,30,.18) !important;
+    }
+
+    .outline-btn,
+    .icon-btn,
+    .secondary,
+    .logout-button,
+    .logout-btn {
+        background: #fff !important;
+        color: #344054 !important;
+        border-color: #d9dee6 !important;
+    }
+
+    .tabs button,
+    .tab,
+    .category-pill,
+    .category-chip {
+        border-radius: 999px !important;
+        border: 1px solid #e4e7ec !important;
+        background: #fff !important;
+        color: #475467 !important;
+    }
+
+    .tabs button.active,
+    .tab.active,
+    .category-pill.active,
+    .category-chip.active {
+        background: linear-gradient(180deg, #fff5f4 0%, #fff1f0 100%) !important;
+        border-color: #f0d1cf !important;
+        color: var(--jj-accent) !important;
+        box-shadow: 0 8px 20px rgba(179,38,30,.08) !important;
+    }
+
+    .status,
+    .badge,
+    .pill,
+    .role-pill {
+        border-radius: 999px !important;
+        font-weight: 800 !important;
+    }
+
+    .table-wrap,
+    .grid-card,
+    .list-card {
+        border-color: #e5e7eb !important;
+        border-radius: 16px !important;
+        background: #fff !important;
+    }
+
+    th { background: #f8fafc !important; }
+    tr:hover td { background: #fcfcfd !important; }
+}
